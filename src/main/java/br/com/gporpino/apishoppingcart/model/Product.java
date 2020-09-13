@@ -40,8 +40,8 @@ public class Product {
     this.discount = discount;
   }
 
-  public int getSalePrice() {
-    return price - (price * discount / 100);
+  public int salePrice() {
+    return getPrice() - (getPrice() * getDiscount() / 100);
   }
 
 }
