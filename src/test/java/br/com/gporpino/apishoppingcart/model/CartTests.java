@@ -92,6 +92,24 @@ public class CartTests {
     assertEquals(totalWithDiscount, subject.totalWithDiscount());
   }
 
+  @Test
+  public void whenAddCoupon() {
+    final Cart subject = new Cart();
+
+    var products = buildProducts(5);
+    products.forEach(p -> subject.addProduct(p));
+
+    var coupon = new Coupon(1, "INFLUENCER_MARY10", 10);
+
+    subject.addCoupon(coupon);
+
+    var total = products.stream().mapToInt(p -> p.getPrice()).sum();
+    var totalWithDiscount = total - (total * 10 / 100);
+    // assert statements
+    assertEquals(total, subject.getTotal());
+    assertEquals(totalWithDiscount, subject.totalWithDiscount());
+  }
+
   // private methods
 
   private List<Product> buildProducts(final int size, int price) {

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Product implements Serializable {
+public class Coupon implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -18,43 +18,40 @@ public class Product implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private String name;
-  private int price;
   private int discount;
 
+  public Coupon() {
+
+  }
+
+  public Coupon(long id, String name, int discount) {
+    this.id = id;
+    this.name = name;
+    this.discount = discount;
+  }
+
   public long getId() {
-    return this.id;
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
   }
 
   public String getName() {
     return name;
   }
 
-  public int getPrice() {
-    return price;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public int getDiscount() {
     return discount;
   }
 
-  public void setId(final long id) {
-    this.id = id;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public void setPrice(final int price) {
-    this.price = price;
-  }
-
-  public void setDiscount(final int discount) {
+  public void setDiscount(int discount) {
     this.discount = discount;
-  }
-
-  public int salePrice() {
-    return getPrice() - (getPrice() * getDiscount() / 100);
   }
 
 }

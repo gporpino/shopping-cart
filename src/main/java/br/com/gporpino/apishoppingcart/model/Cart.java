@@ -26,6 +26,8 @@ public class Cart implements Serializable {
   private int discount;
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private final List<Product> products = new ArrayList<Product>();
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  private final List<Coupon> coupons = new ArrayList<Coupon>();
 
   public Cart() {
 
@@ -78,25 +80,41 @@ public class Cart implements Serializable {
     return product;
   }
 
+  public Coupon addCoupon(Coupon coupon) {
+    coupons.add(coupon);
+
+    updateDiscounts();
+
+    return coupon;
+  }
+
   public int totalWithDiscount() {
-    return getTotal() - (getTotal() * getDiscount() / 100);
+    return getTotal() - (getTotal() * totalDiscount() / 100);
+  }
+
+  public int totalDiscount() {
+    return amountDiscount() + couponDiscount();
+  }
+
+  public int amountDiscount() {
+
+    if (isBetween(total, 1000, 4999)) {
+      return 5;
+    } else if (isBetween(total, 5000, 9999)) {
+      return 7;
+    } else if (getTotal() >= 10000) {
+      return 10;
+    }
+
+    return 0;
+  }
+
+  public int couponDiscount() {
+    return coupons.stream().mapToInt(c -> c.getDiscount()).max().orElse(0);
   }
 
   private void updateDiscounts() {
-
     updateProductsDisconts();
-    updateCartDiscounts();
-  }
-
-  private void updateCartDiscounts() {
-
-    if (isBetween(total, 1000, 4999)) {
-      setDiscount(5);
-    } else if (isBetween(total, 5000, 9999)) {
-      setDiscount(7);
-    } else if (getTotal() >= 10000) {
-      setDiscount(10);
-    }
   }
 
   private void updateProductsDisconts() {
