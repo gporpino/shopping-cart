@@ -43,3 +43,5 @@ blog/bin/
 hs_err_pid*
 
 .DS_store
+
+node_modules
