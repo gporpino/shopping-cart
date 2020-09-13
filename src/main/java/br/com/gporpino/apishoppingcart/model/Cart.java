@@ -22,8 +22,6 @@ public class Cart implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private String name;
-  private int total;
-  private int discount;
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private final List<Product> products = new ArrayList<Product>();
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
@@ -45,14 +43,6 @@ public class Cart implements Serializable {
     return name;
   }
 
-  public int getTotal() {
-    return total;
-  }
-
-  public int getDiscount() {
-    return discount;
-  }
-
   public List<Product> getProducts() {
     return products;
   }
@@ -65,14 +55,6 @@ public class Cart implements Serializable {
     this.name = name;
   }
 
-  public void setTotal(int total) {
-    this.total = total;
-  }
-
-  public void setDiscount(int discount) {
-    this.discount = discount;
-  }
-
   public Product addProduct(Product product) {
     products.add(product);
     updateDiscounts();
@@ -82,14 +64,17 @@ public class Cart implements Serializable {
 
   public Coupon addCoupon(Coupon coupon) {
     coupons.add(coupon);
-
     updateDiscounts();
 
     return coupon;
   }
 
-  public int totalWithDiscount() {
-    return getTotal() - (getTotal() * totalDiscount() / 100);
+  public int subtotal() {
+    return products.stream().mapToInt((p) -> p.salePrice()).sum();
+  }
+
+  public int total() {
+    return subtotal() - (subtotal() * totalDiscount() / 100);
   }
 
   public int totalDiscount() {
@@ -98,11 +83,11 @@ public class Cart implements Serializable {
 
   public int amountDiscount() {
 
-    if (isBetween(total, 1000, 4999)) {
+    if (isBetween(subtotal(), 1000, 4999)) {
       return 5;
-    } else if (isBetween(total, 5000, 9999)) {
+    } else if (isBetween(subtotal(), 5000, 9999)) {
       return 7;
-    } else if (getTotal() >= 10000) {
+    } else if (subtotal() >= 10000) {
       return 10;
     }
 
@@ -121,8 +106,6 @@ public class Cart implements Serializable {
     if (products.size() >= 10) {
       products.forEach((p) -> p.setDiscount(10));
     }
-
-    this.setTotal(products.stream().mapToInt((p) -> p.salePrice()).sum());
   }
 
   private static boolean isBetween(int x, int lower, int upper) {

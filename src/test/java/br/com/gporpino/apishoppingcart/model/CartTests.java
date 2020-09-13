@@ -21,7 +21,8 @@ public class CartTests {
 
     // assert statements
     assertEquals(10, subject.getProducts().size());
-    assertEquals(90, subject.getTotal());
+    assertEquals(90, subject.subtotal());
+    assertEquals(90, subject.total());
   }
 
   @Test
@@ -33,7 +34,8 @@ public class CartTests {
 
     // assert statements
     assertEquals(9, subject.getProducts().size());
-    assertEquals(90, subject.getTotal());
+    assertEquals(90, subject.subtotal());
+    assertEquals(90, subject.total());
   }
 
   @Test
@@ -46,8 +48,8 @@ public class CartTests {
     var total = products.stream().mapToInt(p -> p.getPrice()).sum();
 
     // assert statements
-    assertEquals(total, subject.getTotal());
-    assertEquals(total, subject.totalWithDiscount());
+    assertEquals(total, subject.subtotal());
+    assertEquals(total, subject.total());
   }
 
   @Test
@@ -57,11 +59,11 @@ public class CartTests {
     var products = buildProducts(5, 200);
     products.forEach(p -> subject.addProduct(p));
 
-    var total = products.stream().mapToInt(p -> p.getPrice()).sum();
-    var totalWithDiscount = total - (total * 5 / 100);
+    var subtotal = products.stream().mapToInt(p -> p.getPrice()).sum();
+    var total = subtotal - (subtotal * 5 / 100);
     // assert statements
-    assertEquals(total, subject.getTotal());
-    assertEquals(totalWithDiscount, subject.totalWithDiscount());
+    assertEquals(subtotal, subject.subtotal());
+    assertEquals(total, subject.total());
   }
 
   @Test
@@ -71,11 +73,11 @@ public class CartTests {
     var products = buildProducts(5, 1000);
     products.forEach(p -> subject.addProduct(p));
 
-    var total = products.stream().mapToInt(p -> p.getPrice()).sum();
-    var totalWithDiscount = total - (total * 7 / 100);
+    var subtotal = products.stream().mapToInt(p -> p.getPrice()).sum();
+    var total = subtotal - (subtotal * 7 / 100);
     // assert statements
-    assertEquals(total, subject.getTotal());
-    assertEquals(totalWithDiscount, subject.totalWithDiscount());
+    assertEquals(subtotal, subject.subtotal());
+    assertEquals(total, subject.total());
   }
 
   @Test
@@ -85,11 +87,11 @@ public class CartTests {
     var products = buildProducts(5, 2000);
     products.forEach(p -> subject.addProduct(p));
 
-    var total = products.stream().mapToInt(p -> p.getPrice()).sum();
-    var totalWithDiscount = total - (total * 10 / 100);
+    var subtotal = products.stream().mapToInt(p -> p.getPrice()).sum();
+    var total = subtotal - (subtotal * 10 / 100);
     // assert statements
-    assertEquals(total, subject.getTotal());
-    assertEquals(totalWithDiscount, subject.totalWithDiscount());
+    assertEquals(subtotal, subject.subtotal());
+    assertEquals(total, subject.total());
   }
 
   @Test
@@ -103,11 +105,11 @@ public class CartTests {
 
     subject.addCoupon(coupon);
 
-    var total = products.stream().mapToInt(p -> p.getPrice()).sum();
-    var totalWithDiscount = total - (total * 10 / 100);
+    var subtotal = products.stream().mapToInt(p -> p.getPrice()).sum();
+    var total = subtotal - (subtotal * 10 / 100);
     // assert statements
-    assertEquals(total, subject.getTotal());
-    assertEquals(totalWithDiscount, subject.totalWithDiscount());
+    assertEquals(subtotal, subject.subtotal());
+    assertEquals(total, subject.total());
   }
 
   // private methods
