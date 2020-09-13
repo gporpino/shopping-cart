@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class ProductTests {
 
   @Test
-  public void WhenHasNoDiscount() {
+  public void whenHasNoDiscount() {
 
     final Product subject = new Product();
     subject.setPrice(10);
@@ -20,7 +20,7 @@ public class ProductTests {
   }
 
   @Test
-  public void WhenHasDiscount() {
+  public void whenHasDiscount() {
 
     final Product subject = new Product();
     subject.setPrice(10);

@@ -24,7 +24,7 @@ public class CartTests {
   }
 
   @Test
-  public void WhenHasAtLeastTenProducts() {
+  public void whenHasAtLeastTenProducts() {
     final Cart subject = new Cart();
 
     var products = buildProducts(10);
@@ -38,7 +38,7 @@ public class CartTests {
   }
 
   @Test
-  public void WhenHasLessThanTenProducts() {
+  public void whenHasLessThanTenProducts() {
     final Cart subject = new Cart();
 
     var products = buildProducts(9);
@@ -51,7 +51,7 @@ public class CartTests {
   }
 
   @Test
-  public void WhenTotalIsLessThanAThousand() {
+  public void whenTotalIsLessThanAThousand() {
     final Cart subject = new Cart();
 
     var products = buildProducts(5, 100);
@@ -65,7 +65,7 @@ public class CartTests {
   }
 
   @Test
-  public void WhenTotalIsMoreThanAThousand() {
+  public void whenTotalIsMoreThanAThousand() {
     final Cart subject = new Cart();
 
     var products = buildProducts(5, 200);
@@ -79,7 +79,7 @@ public class CartTests {
   }
 
   @Test
-  public void WhenTotalIsMoreThanFiveThousands() {
+  public void whenTotalIsMoreThanFiveThousands() {
     final Cart subject = new Cart();
 
     var products = buildProducts(5, 1000);
@@ -93,7 +93,7 @@ public class CartTests {
   }
 
   @Test
-  public void WhenTotalIsMoreThanTenThousands() {
+  public void whenTotalIsMoreThanTenThousands() {
     final Cart subject = new Cart();
 
     var products = buildProducts(5, 2000);
