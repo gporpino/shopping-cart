@@ -18,6 +18,9 @@ public class CartService {
   @Autowired
   ProductService productService;
 
+  @Autowired
+  CouponService couponService;
+
   public CartService() {
   }
 
@@ -59,7 +62,14 @@ public class CartService {
     cart.addProduct(product);
 
     return repository.save(cart);
+  }
 
+  public Cart addCoupon(Long id, Long couponId) {
+    var coupon = couponService.findById(couponId);
+    var cart = findById(id);
+    cart.addCoupon(coupon);
+
+    return repository.save(cart);
   }
 
 }

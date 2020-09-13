@@ -54,4 +54,9 @@ public class CartController {
     return service.addProduct(id, productId);
   }
 
+  @PutMapping("/{id}/add/coupon/{couponId}")
+  public Cart addCoupon(@PathVariable("id") Long id, @PathVariable("couponId") Long couponId) {
+    return service.addCoupon(id, couponId);
+  }
+
 }

@@ -47,6 +47,10 @@ public class Cart implements Serializable {
     return products;
   }
 
+  public List<Coupon> getCoupons() {
+    return coupons;
+  }
+
   public void setId(long id) {
     this.id = id;
   }
