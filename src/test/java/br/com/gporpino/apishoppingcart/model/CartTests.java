@@ -139,6 +139,40 @@ public class CartTests {
     assertEquals(total, subject.total());
   }
 
+  @Test
+  public void whenAddTwoCouponShouldBeOnlyTheMax() {
+    final Cart subject = new Cart();
+
+    var products = buildProducts(5);
+    products.forEach(p -> subject.addProduct(p));
+
+    subject.addCoupon(new Coupon(1, "INFLUENCER_MARY10", 10));
+    subject.addCoupon(new Coupon(1, "INFLUENCER_MARY15", 15));
+
+    var subtotal = products.stream().mapToInt(p -> p.getPrice()).sum();
+    var total = subtotal - (subtotal * 15 / 100);
+    // assert statements
+    assertEquals(subtotal, subject.subtotal());
+    assertEquals(total, subject.total());
+  }
+
+  @Test
+  public void whenAddTwoCouponShouldBeOnlyTheMaxInversePosition() {
+    final Cart subject = new Cart();
+
+    var products = buildProducts(5);
+    products.forEach(p -> subject.addProduct(p));
+
+    subject.addCoupon(new Coupon(1, "INFLUENCER_MARY15", 20));
+    subject.addCoupon(new Coupon(1, "INFLUENCER_MARY10", 10));
+
+    var subtotal = products.stream().mapToInt(p -> p.getPrice()).sum();
+    var total = subtotal - (subtotal * 20 / 100);
+    // assert statements
+    assertEquals(subtotal, subject.subtotal());
+    assertEquals(total, subject.total());
+  }
+
   // private methods
 
   private List<Product> buildProducts(final int size, int price) {
