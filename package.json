@@ -11,6 +11,7 @@
     "test": "mvn test",
     "compile": "mvn compile",
     "package": "yarn clean && mvn package",
+    "start": "yarn package && mvn spring-boot:run",
     "pre:commit": "yarn clean && yarn test"
   },
   "husky": {
