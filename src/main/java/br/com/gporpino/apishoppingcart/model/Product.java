@@ -13,11 +13,16 @@ public class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
+  private String name;
   private int price;
   private int discount;
 
   public long getId() {
     return this.id;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public int getPrice() {
@@ -30,6 +35,10 @@ public class Product {
 
   public void setId(final long id) {
     this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public void setPrice(final int price) {
