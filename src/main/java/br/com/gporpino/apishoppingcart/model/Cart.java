@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.com.gporpino.apishoppingcart.handler.NumberHandler;
+import br.com.gporpino.apishoppingcart.model.enums.AmountDiscount;
+
 @Entity
 @Table
 public class Cart implements Serializable {
@@ -87,12 +90,12 @@ public class Cart implements Serializable {
 
   public int amountDiscount() {
 
-    if (isBetween(subtotal(), 1000, 4999)) {
-      return 5;
-    } else if (isBetween(subtotal(), 5000, 9999)) {
-      return 7;
-    } else if (subtotal() >= 10000) {
-      return 10;
+    if (NumberHandler.isBetween(subtotal(), AmountDiscount.START.from(), AmountDiscount.START.to())) {
+      return AmountDiscount.START.discount();
+    } else if (NumberHandler.isBetween(subtotal(), AmountDiscount.MEDIUM.from(), AmountDiscount.MEDIUM.to())) {
+      return AmountDiscount.MEDIUM.discount();
+    } else if (subtotal() >= AmountDiscount.EXTREME.from()) {
+      return AmountDiscount.EXTREME.discount();
     }
 
     return 0;
@@ -110,10 +113,6 @@ public class Cart implements Serializable {
     if (products.size() >= 10) {
       products.forEach((p) -> p.setDiscount(10));
     }
-  }
-
-  private static boolean isBetween(int x, int lower, int upper) {
-    return lower <= x && x <= upper;
   }
 
 }
