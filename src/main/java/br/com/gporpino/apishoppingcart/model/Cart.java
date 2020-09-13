@@ -74,10 +74,10 @@ public class Cart implements Serializable {
   }
 
   public int total() {
-    return subtotal() - (subtotal() * totalDiscount() / 100);
+    return subtotal() - (subtotal() * discount() / 100);
   }
 
-  public int totalDiscount() {
+  public int discount() {
     return amountDiscount() + couponDiscount();
   }
 

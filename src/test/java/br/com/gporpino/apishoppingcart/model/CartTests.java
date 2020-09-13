@@ -13,6 +13,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class CartTests {
 
   @Test
+  public void whenHasNoProducts() {
+    final Cart subject = new Cart();
+
+    // assert statements
+    assertEquals(0, subject.getProducts().size());
+    assertEquals(0, subject.subtotal());
+    assertEquals(0, subject.total());
+    assertEquals(0, subject.discount());
+  }
+
+  @Test
   public void WhenHasAtLeastTenProducts() {
     final Cart subject = new Cart();
 
@@ -23,6 +34,7 @@ public class CartTests {
     assertEquals(10, subject.getProducts().size());
     assertEquals(90, subject.subtotal());
     assertEquals(90, subject.total());
+    assertEquals(0, subject.discount());
   }
 
   @Test
@@ -92,6 +104,21 @@ public class CartTests {
     // assert statements
     assertEquals(subtotal, subject.subtotal());
     assertEquals(total, subject.total());
+  }
+
+  @Test
+  public void whenWithoutCoupon() {
+    final Cart subject = new Cart();
+
+    var products = buildProducts(5);
+    products.forEach(p -> subject.addProduct(p));
+
+    var subtotal = products.stream().mapToInt(p -> p.getPrice()).sum();
+
+    // assert statements
+    assertEquals(subtotal, subject.subtotal());
+    assertEquals(subtotal, subject.total());
+    assertEquals(0, subject.discount());
   }
 
   @Test
