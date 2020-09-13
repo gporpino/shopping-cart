@@ -7,8 +7,11 @@
   "private": true,
   "dependencies": {},
   "scripts": {
+    "clean": "mvn clean",
     "test": "mvn test",
-    "pre:commit": "yarn test"
+    "compile": "mvn compile",
+    "package": "yarn clean && mvn package",
+    "pre:commit": "yarn clean && yarn test"
   },
   "husky": {
     "hooks": {
