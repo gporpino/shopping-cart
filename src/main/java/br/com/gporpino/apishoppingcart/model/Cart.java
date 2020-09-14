@@ -25,8 +25,12 @@ public class Cart implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private String name;
+
+  // @OneToMany(mappedBy = "cart")
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  private final List<Product> products = new ArrayList<Product>();
+  private List<CartItem> items = new ArrayList<CartItem>();
+  // @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  // private final List<Product> products = new ArrayList<Product>();
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private final List<Coupon> coupons = new ArrayList<Coupon>();
 
@@ -46,8 +50,8 @@ public class Cart implements Serializable {
     return name;
   }
 
-  public List<Product> getProducts() {
-    return products;
+  public List<CartItem> getItems() {
+    return items;
   }
 
   public List<Coupon> getCoupons() {
@@ -63,21 +67,27 @@ public class Cart implements Serializable {
   }
 
   public Product addProduct(Product product) {
-    products.add(product);
-    updateDiscounts();
+
+    var item = items.stream().filter(i -> i.getProduct().equals(product)).findFirst().orElse(null);
+    if (item == null) {
+      item = new CartItem(product);
+    } else {
+      item.increaseQuantity();
+    }
+
+    items.add(item);
 
     return product;
   }
 
   public Coupon addCoupon(Coupon coupon) {
     coupons.add(coupon);
-    updateDiscounts();
 
     return coupon;
   }
 
   public int subtotal() {
-    return products.stream().mapToInt((p) -> p.salePrice()).sum();
+    return items.stream().mapToInt((p) -> p.subtotal()).sum();
   }
 
   public int total() {
@@ -103,16 +113,6 @@ public class Cart implements Serializable {
 
   public int couponDiscount() {
     return coupons.stream().mapToInt(c -> c.getDiscount()).max().orElse(0);
-  }
-
-  private void updateDiscounts() {
-    updateProductsDisconts();
-  }
-
-  private void updateProductsDisconts() {
-    if (products.size() >= 10) {
-      products.forEach((p) -> p.setDiscount(10));
-    }
   }
 
 }

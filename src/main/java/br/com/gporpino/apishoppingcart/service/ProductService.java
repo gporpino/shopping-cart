@@ -23,8 +23,9 @@ public class ProductService {
   public Product update(Product product) {
     Product entity = findById(product.getId());
 
+    entity.setName(product.getName());
     entity.setPrice(product.getPrice());
-    entity.setDiscount(product.getDiscount());
+
     return repository.save(entity);
   }
 

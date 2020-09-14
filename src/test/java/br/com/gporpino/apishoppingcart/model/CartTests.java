@@ -17,37 +17,10 @@ public class CartTests {
     final Cart subject = new Cart();
 
     // assert statements
-    assertEquals(0, subject.getProducts().size());
+    assertEquals(0, subject.getItems().size());
     assertEquals(0, subject.subtotal());
     assertEquals(0, subject.total());
     assertEquals(0, subject.discount());
-  }
-
-  @Test
-  public void whenHasAtLeastTenProducts() {
-    final Cart subject = new Cart();
-
-    var products = buildProducts(10);
-    products.forEach(p -> subject.addProduct(p));
-
-    // assert statements
-    assertEquals(10, subject.getProducts().size());
-    assertEquals(90, subject.subtotal());
-    assertEquals(90, subject.total());
-    assertEquals(0, subject.discount());
-  }
-
-  @Test
-  public void whenHasLessThanTenProducts() {
-    final Cart subject = new Cart();
-
-    var products = buildProducts(9);
-    products.forEach(p -> subject.addProduct(p));
-
-    // assert statements
-    assertEquals(9, subject.getProducts().size());
-    assertEquals(90, subject.subtotal());
-    assertEquals(90, subject.total());
   }
 
   @Test
@@ -174,20 +147,30 @@ public class CartTests {
   }
 
   @Test
-  public void whenHasCouponTenProductsAndBigAmount() {
+  public void whenHasAtLeastTenProducts() {
     final Cart subject = new Cart();
 
-    var products = buildProducts(10, 200);
+    var products = buildProducts(10);
     products.forEach(p -> subject.addProduct(p));
 
-    subject.addCoupon(new Coupon(1, "INFLUENCER_MARY10", 10));
-
-    var subtotal = products.stream().mapToInt(p -> p.salePrice()).sum();
-    var total = subtotal - (subtotal * 15 / 100);
     // assert statements
-    assertEquals(subtotal, subject.subtotal());
-    assertEquals(total, subject.total());
-    assertEquals(15, subject.discount());
+    assertEquals(10, subject.getItems().size());
+    assertEquals(90, subject.subtotal());
+    assertEquals(90, subject.total());
+    assertEquals(0, subject.discount());
+  }
+
+  @Test
+  public void whenHasLessThanTenProducts() {
+    final Cart subject = new Cart();
+
+    var products = buildProducts(9);
+    products.forEach(p -> subject.addProduct(p));
+
+    // assert statements
+    assertEquals(9, subject.getItems().size());
+    assertEquals(90, subject.subtotal());
+    assertEquals(90, subject.total());
   }
 
   // private methods

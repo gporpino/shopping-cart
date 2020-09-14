@@ -7,19 +7,23 @@ import org.springframework.stereotype.Service;
 
 import br.com.gporpino.apishoppingcart.exceptions.ResourceNotFoundException;
 import br.com.gporpino.apishoppingcart.model.Cart;
+import br.com.gporpino.apishoppingcart.model.CartItem;
 import br.com.gporpino.apishoppingcart.repository.CartRepository;
 
 @Service
 public class CartService {
 
   @Autowired
-  CartRepository repository;
+  private CartRepository repository;
 
   @Autowired
-  ProductService productService;
+  private ProductService productService;
 
   @Autowired
-  CouponService couponService;
+  private CouponService couponService;
+
+  @Autowired
+  private CartItemService cartItemService;
 
   public CartService() {
   }
@@ -57,6 +61,7 @@ public class CartService {
   public Cart addProduct(Long id, Long productId) {
     var product = productService.findById(productId);
     var cart = findById(id);
+
     cart.addProduct(product);
 
     return repository.save(cart);

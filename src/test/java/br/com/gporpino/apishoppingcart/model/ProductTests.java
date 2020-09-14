@@ -16,7 +16,6 @@ public class ProductTests {
 
     // assert statements
     assertEquals(10, subject.getPrice());
-    assertEquals(0, subject.getDiscount());
   }
 
   @Test
@@ -24,11 +23,8 @@ public class ProductTests {
 
     final Product subject = new Product();
     subject.setPrice(10);
-    subject.setDiscount(10);
 
     // assert statements
     assertEquals(10, subject.getPrice());
-    assertEquals(10, subject.getDiscount());
-    assertEquals(9, subject.salePrice());
   }
 }

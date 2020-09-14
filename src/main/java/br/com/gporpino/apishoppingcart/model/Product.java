@@ -19,7 +19,6 @@ public class Product implements Serializable {
   private long id;
   private String name;
   private int price;
-  private int discount;
 
   public long getId() {
     return this.id;
@@ -31,10 +30,6 @@ public class Product implements Serializable {
 
   public int getPrice() {
     return price;
-  }
-
-  public int getDiscount() {
-    return discount;
   }
 
   public void setId(final long id) {
@@ -49,12 +44,26 @@ public class Product implements Serializable {
     this.price = price;
   }
 
-  public void setDiscount(final int discount) {
-    this.discount = discount;
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (int) (id ^ (id >>> 32));
+    return result;
   }
 
-  public int salePrice() {
-    return getPrice() - (getPrice() * getDiscount() / 100);
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Product other = (Product) obj;
+    if (id != other.id)
+      return false;
+    return true;
   }
 
 }
