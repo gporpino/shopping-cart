@@ -17,7 +17,7 @@
 
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <start-class>br.com.gporpino.apishoppingcart.Application</start-class>
+      <start-class>br.com.gporpino.apishoppingcart.Startup</start-class>
       <java.version>11</java.version>
   </properties>
   

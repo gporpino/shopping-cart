@@ -9,6 +9,10 @@ import java.util.stream.IntStream;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import br.com.gporpino.apishoppingcart.domain.entities.Cart;
+import br.com.gporpino.apishoppingcart.domain.entities.Coupon;
+import br.com.gporpino.apishoppingcart.domain.entities.Product;
+
 @SpringBootTest
 public class CartTests {
 
