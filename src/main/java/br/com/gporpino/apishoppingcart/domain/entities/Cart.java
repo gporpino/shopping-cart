@@ -35,7 +35,7 @@ public class Cart implements Serializable {
 
   }
 
-  public Cart(long id) {
+  public Cart(Long id) {
     this.id = id;
   }
 
@@ -83,25 +83,25 @@ public class Cart implements Serializable {
     return coupon;
   }
 
-  public int subtotal() {
+  public int getSubtotal() {
     return items.stream().mapToInt((p) -> p.subtotal()).sum();
   }
 
-  public int total() {
-    return subtotal() - (subtotal() * discount() / 100);
+  public int getTotal() {
+    return getSubtotal() - (getSubtotal() * getDiscount() / 100);
   }
 
-  public int discount() {
+  public int getDiscount() {
     return amountDiscount() + couponDiscount();
   }
 
   private int amountDiscount() {
 
-    if (NumberHandler.isBetween(subtotal(), AmountDiscount.START.from(), AmountDiscount.START.to())) {
+    if (NumberHandler.isBetween(getSubtotal(), AmountDiscount.START.from(), AmountDiscount.START.to())) {
       return AmountDiscount.START.discount();
-    } else if (NumberHandler.isBetween(subtotal(), AmountDiscount.MEDIUM.from(), AmountDiscount.MEDIUM.to())) {
+    } else if (NumberHandler.isBetween(getSubtotal(), AmountDiscount.MEDIUM.from(), AmountDiscount.MEDIUM.to())) {
       return AmountDiscount.MEDIUM.discount();
-    } else if (subtotal() >= AmountDiscount.EXTREME.from()) {
+    } else if (getSubtotal() >= AmountDiscount.EXTREME.from()) {
       return AmountDiscount.EXTREME.discount();
     }
 
@@ -112,4 +112,25 @@ public class Cart implements Serializable {
     return coupons.stream().mapToInt(c -> c.getDiscount()).max().orElse(0);
   }
 
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (int) (id ^ (id >>> 32));
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Cart other = (Cart) obj;
+    if (id != other.id)
+      return false;
+    return true;
+  }
 }

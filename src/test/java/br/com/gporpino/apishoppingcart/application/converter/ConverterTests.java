@@ -22,7 +22,7 @@ public class ConverterTests {
   @Test
   public void parseEntityToVOTest() {
     ProductVO output = Converter.parse(inputObject.mockEntity(), ProductVO.class);
-    Assert.assertEquals(Long.valueOf(0L), output.getId());
+    Assert.assertEquals(0L, output.getId());
     Assert.assertEquals("First Name Test0", output.getName());
     Assert.assertEquals(0, output.getPrice());
   }
@@ -32,19 +32,19 @@ public class ConverterTests {
     List<ProductVO> outputList = Converter.parse(inputObject.mockEntityList(), ProductVO.class);
     ProductVO outputZero = outputList.get(0);
 
-    Assert.assertEquals(Long.valueOf(0L), outputZero.getId());
+    Assert.assertEquals(0L, outputZero.getId());
     Assert.assertEquals("First Name Test0", outputZero.getName());
     Assert.assertEquals(0, outputZero.getPrice());
 
     ProductVO outputSeven = outputList.get(7);
 
-    Assert.assertEquals(Long.valueOf(7L), outputSeven.getId());
+    Assert.assertEquals(7L, outputSeven.getId());
     Assert.assertEquals("First Name Test7", outputSeven.getName());
     Assert.assertEquals(7, outputSeven.getPrice());
 
     ProductVO outputTwelve = outputList.get(12);
 
-    Assert.assertEquals(Long.valueOf(12L), outputTwelve.getId());
+    Assert.assertEquals(12L, outputTwelve.getId());
     Assert.assertEquals("First Name Test12", outputTwelve.getName());
     Assert.assertEquals(12, outputTwelve.getPrice());
 
@@ -53,7 +53,7 @@ public class ConverterTests {
   @Test
   public void parseVOToEntityTest() {
     Product output = Converter.parse(inputObject.mockVO(), Product.class);
-    Assert.assertEquals(Long.valueOf(0L), output.getId());
+    Assert.assertEquals(0L, output.getId());
     Assert.assertEquals("First Name Test0", output.getName());
     Assert.assertEquals(0, output.getPrice());
 
@@ -64,19 +64,19 @@ public class ConverterTests {
     List<Product> outputList = Converter.parse(inputObject.mockVOList(), Product.class);
     Product outputZero = outputList.get(0);
 
-    Assert.assertEquals(Long.valueOf(0L), outputZero.getId());
+    Assert.assertEquals(0L, outputZero.getId());
     Assert.assertEquals("First Name Test0", outputZero.getName());
     Assert.assertEquals(0, outputZero.getPrice());
 
     Product outputSeven = outputList.get(7);
 
-    Assert.assertEquals(Long.valueOf(7L), outputSeven.getId());
+    Assert.assertEquals(7L, outputSeven.getId());
     Assert.assertEquals("First Name Test7", outputSeven.getName());
     Assert.assertEquals(7, outputSeven.getPrice());
 
     Product outputTwelve = outputList.get(12);
 
-    Assert.assertEquals(Long.valueOf(12L), outputTwelve.getId());
+    Assert.assertEquals(12L, outputTwelve.getId());
     Assert.assertEquals("First Name Test12", outputTwelve.getName());
     Assert.assertEquals(12, outputTwelve.getPrice());
 
