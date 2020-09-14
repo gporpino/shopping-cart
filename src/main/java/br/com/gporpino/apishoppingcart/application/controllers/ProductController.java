@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gporpino.apishoppingcart.domain.entities.Product;
-import br.com.gporpino.apishoppingcart.domain.services.ProductService;
+import br.com.gporpino.apishoppingcart.domain.services.interfaces.IProductService;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
   @Autowired
-  private ProductService service;
+  private IProductService service;
 
   @GetMapping
   public List<Product> findAll() {

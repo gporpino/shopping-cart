@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.gporpino.apishoppingcart.domain.entities.Product;
 import br.com.gporpino.apishoppingcart.application.exceptions.ResourceNotFoundException;
+import br.com.gporpino.apishoppingcart.domain.entities.Product;
+import br.com.gporpino.apishoppingcart.domain.services.interfaces.IProductService;
 import br.com.gporpino.apishoppingcart.infra.repository.ProductRepository;
 
 @Service
-public class ProductService {
+public class ProductService implements IProductService {
 
   @Autowired
   ProductRepository repository;

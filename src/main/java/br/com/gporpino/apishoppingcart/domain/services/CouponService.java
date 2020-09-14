@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.gporpino.apishoppingcart.domain.entities.Coupon;
 import br.com.gporpino.apishoppingcart.application.exceptions.ResourceNotFoundException;
+import br.com.gporpino.apishoppingcart.domain.entities.Coupon;
+import br.com.gporpino.apishoppingcart.domain.services.interfaces.ICouponService;
 import br.com.gporpino.apishoppingcart.infra.repository.CouponRepository;
 
 @Service
-public class CouponService {
+public class CouponService implements ICouponService {
 
   @Autowired
   CouponRepository repository;

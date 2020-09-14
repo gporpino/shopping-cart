@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.gporpino.apishoppingcart.domain.entities.Coupon;
-import br.com.gporpino.apishoppingcart.domain.services.CouponService;
+import br.com.gporpino.apishoppingcart.domain.services.interfaces.ICouponService;
 
 @RestController
 @RequestMapping("/coupons")
 public class CouponController {
 
   @Autowired
-  private CouponService service;
+  private ICouponService service;
 
   @GetMapping
   public List<Coupon> findAll() {
