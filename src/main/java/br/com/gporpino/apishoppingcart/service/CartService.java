@@ -34,8 +34,7 @@ public class CartService {
   }
 
   public Cart update(Cart cart) {
-    Cart entity = repository.findById(cart.getId())
-        .orElseThrow(() -> new ResourceNotFoundException("No object found with this ID"));
+    Cart entity = findById(cart.getId());
 
     entity.setName(cart.getName());
 
@@ -43,8 +42,7 @@ public class CartService {
   }
 
   public void delete(Long id) {
-    Cart entity = repository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("No object found with this ID"));
+    Cart entity = findById(id);
     repository.delete(entity);
   }
 

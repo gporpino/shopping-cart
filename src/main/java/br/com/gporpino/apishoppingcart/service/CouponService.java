@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.gporpino.apishoppingcart.exceptions.ResourceNotFoundException;
 import br.com.gporpino.apishoppingcart.model.Coupon;
-
 import br.com.gporpino.apishoppingcart.repository.CouponRepository;
 
 @Service
@@ -22,8 +21,7 @@ public class CouponService {
   }
 
   public Coupon update(Coupon coupon) {
-    Coupon entity = repository.findById(coupon.getId())
-        .orElseThrow(() -> new ResourceNotFoundException("No object found with this ID"));
+    Coupon entity = findById(coupon.getId());
 
     entity.setName(coupon.getName());
     entity.setDiscount(coupon.getDiscount());
@@ -31,8 +29,7 @@ public class CouponService {
   }
 
   public void delete(Long id) {
-    Coupon entity = repository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("No object found with this ID"));
+    Coupon entity = findById(id);
     repository.delete(entity);
   }
 

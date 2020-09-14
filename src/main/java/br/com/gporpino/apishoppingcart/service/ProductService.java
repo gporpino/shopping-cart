@@ -21,8 +21,7 @@ public class ProductService {
   }
 
   public Product update(Product product) {
-    Product entity = repository.findById(product.getId())
-        .orElseThrow(() -> new ResourceNotFoundException("No object found with this ID"));
+    Product entity = findById(product.getId());
 
     entity.setPrice(product.getPrice());
     entity.setDiscount(product.getDiscount());
@@ -30,8 +29,7 @@ public class ProductService {
   }
 
   public void delete(Long id) {
-    Product entity = repository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("No object found with this ID"));
+    Product entity = findById(id);
     repository.delete(entity);
   }
 
