@@ -1,8 +1,10 @@
 package br.com.gporpino.apishoppingcart.application.vo;
 
+import org.springframework.hateoas.*;
+
 import java.io.Serializable;
 
-public class ProductVO implements Serializable {
+public class ProductVO extends RepresentationModel<ProductVO> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 

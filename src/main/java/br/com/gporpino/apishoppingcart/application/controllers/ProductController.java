@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import br.com.gporpino.apishoppingcart.application.converter.Converter;
 import br.com.gporpino.apishoppingcart.application.vo.ProductVO;
 import br.com.gporpino.apishoppingcart.domain.entities.Product;
@@ -27,26 +29,35 @@ public class ProductController {
 
   @GetMapping
   public List<ProductVO> findAll() {
-    return Converter.parse(service.findAll(), ProductVO.class);
+    var products = Converter.parse(service.findAll(), ProductVO.class);
+    products.stream().forEach(p -> p.add(linkTo(methodOn(ProductController.class).findById(p.getId())).withSelfRel()));
+
+    return products;
   }
 
   @GetMapping("/{id}")
   public ProductVO findById(@PathVariable("id") Long id) {
-    return Converter.parse(service.findById(id), ProductVO.class);
+    var productVO = Converter.parse(service.findById(id), ProductVO.class);
+    productVO.add(linkTo(methodOn(ProductController.class).findById(id)).withSelfRel());
+    return productVO;
   }
 
   @PostMapping
   public ProductVO create(@RequestBody ProductVO product) {
     var entity = Converter.parse(product, Product.class);
-    var vo = Converter.parse(service.create(entity), ProductVO.class);
-    return vo;
+    var productVO = Converter.parse(service.create(entity), ProductVO.class);
+
+    productVO.add(linkTo(methodOn(ProductController.class).findById(productVO.getId())).withSelfRel());
+    return productVO;
+
   }
 
   @PutMapping
   public ProductVO update(@RequestBody ProductVO product) {
     var entity = Converter.parse(product, Product.class);
-    var vo = Converter.parse(service.update(entity), ProductVO.class);
-    return vo;
+    var productVO = Converter.parse(service.update(entity), ProductVO.class);
+    productVO.add(linkTo(methodOn(ProductController.class).findById(productVO.getId())).withSelfRel());
+    return productVO;
   }
 
   @DeleteMapping("/{id}")
