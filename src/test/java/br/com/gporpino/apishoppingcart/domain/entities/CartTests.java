@@ -27,7 +27,7 @@ public class CartTests {
   public void whenTotalIsLessThanAThousand() {
     final Cart subject = new Cart();
 
-    var products = buildProducts(5, 100);
+    var products = buildProducts(5, 100, true);
     products.forEach(p -> subject.addProduct(p));
 
     var total = products.stream().mapToInt(p -> p.getPrice()).sum();
@@ -41,7 +41,7 @@ public class CartTests {
   public void whenTotalIsMoreThanAThousand() {
     final Cart subject = new Cart();
 
-    var products = buildProducts(5, 200);
+    var products = buildProducts(5, 200, true);
     products.forEach(p -> subject.addProduct(p));
 
     var subtotal = products.stream().mapToInt(p -> p.getPrice()).sum();
@@ -55,7 +55,7 @@ public class CartTests {
   public void whenTotalIsMoreThanFiveThousands() {
     final Cart subject = new Cart();
 
-    var products = buildProducts(5, 1000);
+    var products = buildProducts(5, 1000, true);
     products.forEach(p -> subject.addProduct(p));
 
     var subtotal = products.stream().mapToInt(p -> p.getPrice()).sum();
@@ -69,7 +69,7 @@ public class CartTests {
   public void whenTotalIsMoreThanTenThousands() {
     final Cart subject = new Cart();
 
-    var products = buildProducts(5, 2000);
+    var products = buildProducts(5, 2000, true);
     products.forEach(p -> subject.addProduct(p));
 
     var subtotal = products.stream().mapToInt(p -> p.getPrice()).sum();
@@ -147,16 +147,30 @@ public class CartTests {
   }
 
   @Test
-  public void whenHasAtLeastTenProducts() {
+  public void whenHasAtLeastTenSameProduct() {
     final Cart subject = new Cart();
 
-    var products = buildProducts(10);
+    var products = buildProducts(10, true);
     products.forEach(p -> subject.addProduct(p));
 
     // assert statements
-    assertEquals(10, subject.getItems().size());
+    assertEquals(1, subject.getItems().size());
     assertEquals(90, subject.getSubtotal());
     assertEquals(90, subject.getTotal());
+    assertEquals(0, subject.getDiscount());
+  }
+
+  @Test
+  public void whenAddTheSameProduct() {
+    final Cart subject = new Cart();
+
+    var products = buildProducts(2, true);
+    products.forEach(p -> subject.addProduct(p));
+
+    // assert statements
+    assertEquals(1, subject.getItems().size());
+    assertEquals(20, subject.getSubtotal());
+    assertEquals(20, subject.getTotal());
     assertEquals(0, subject.getDiscount());
   }
 
@@ -175,11 +189,12 @@ public class CartTests {
 
   // private methods
 
-  private List<Product> buildProducts(final int size, int price) {
+  private List<Product> buildProducts(final int size, int price, boolean sameId) {
     List<Product> products = new ArrayList<Product>();
 
     IntStream.range(0, size).forEach(i -> {
       final Product product = new Product();
+      product.setId(sameId ? 1 : i);
       product.setPrice(price);
       products.add(product);
     });
@@ -189,5 +204,13 @@ public class CartTests {
 
   private List<Product> buildProducts(final int size) {
     return buildProducts(size, 10);
+  }
+
+  private List<Product> buildProducts(final int size, boolean sameId) {
+    return buildProducts(size, 10, sameId);
+  }
+
+  private List<Product> buildProducts(final int size, int price) {
+    return buildProducts(size, 10, false);
   }
 }

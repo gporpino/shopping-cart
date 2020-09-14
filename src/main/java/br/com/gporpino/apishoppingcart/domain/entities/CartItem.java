@@ -69,7 +69,11 @@ public class CartItem implements Serializable {
   }
 
   public int subtotal() {
-    return product.getPrice() - (product.getPrice() * discount() / 100);
+    return (product.getPrice() - percent()) * getQuantity();
+  }
+
+  private int percent() {
+    return product.getPrice() * discount() / 100;
   }
 
   private int discount() {

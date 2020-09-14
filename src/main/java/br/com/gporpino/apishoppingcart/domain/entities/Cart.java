@@ -68,11 +68,10 @@ public class Cart implements Serializable {
     var item = items.stream().filter(i -> i.getProduct().equals(product)).findFirst().orElse(null);
     if (item == null) {
       item = new CartItem(product);
+      items.add(item);
     } else {
       item.increaseQuantity();
     }
-
-    items.add(item);
 
     return product;
   }
