@@ -3,10 +3,12 @@ package br.com.gporpino.apishoppingcart.application.vo;
 import java.io.Serializable;
 import java.util.List;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import br.com.gporpino.apishoppingcart.domain.entities.CartItem;
 import br.com.gporpino.apishoppingcart.domain.entities.Coupon;
 
-public class CartVO implements Serializable {
+public class CartVO extends RepresentationModel<CartVO> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 

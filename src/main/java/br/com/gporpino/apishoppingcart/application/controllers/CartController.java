@@ -2,6 +2,8 @@ package br.com.gporpino.apishoppingcart.application.controllers;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,26 +29,35 @@ public class CartController {
 
   @GetMapping
   public List<CartVO> findAll() {
-    return Converter.parse(service.findAll(), CartVO.class);
+    var coupons = Converter.parse(service.findAll(), CartVO.class);
+    coupons.stream().forEach(p -> p.add(linkTo(methodOn(CartController.class).findById(p.getId())).withSelfRel()));
+
+    return coupons;
   }
 
   @GetMapping("/{id}")
   public CartVO findById(@PathVariable("id") Long id) {
-    return Converter.parse(service.findById(id), CartVO.class);
+    var valueObject = Converter.parse(service.findById(id), CartVO.class);
+    valueObject.add(linkTo(methodOn(CartController.class).findById(id)).withSelfRel());
+    return valueObject;
   }
 
   @PostMapping
   public CartVO create(@RequestBody CartVO cart) {
     var entity = Converter.parse(cart, Cart.class);
-    var vo = Converter.parse(service.create(entity), CartVO.class);
-    return vo;
+    var valueObject = Converter.parse(service.create(entity), CartVO.class);
+
+    valueObject.add(linkTo(methodOn(CartController.class).findById(valueObject.getId())).withSelfRel());
+    return valueObject;
+
   }
 
   @PutMapping
   public CartVO update(@RequestBody CartVO cart) {
     var entity = Converter.parse(cart, Cart.class);
-    var vo = Converter.parse(service.update(entity), CartVO.class);
-    return vo;
+    var valueObject = Converter.parse(service.update(entity), CartVO.class);
+    valueObject.add(linkTo(methodOn(CartController.class).findById(valueObject.getId())).withSelfRel());
+    return valueObject;
   }
 
   @DeleteMapping("/{id}")
@@ -57,12 +68,16 @@ public class CartController {
 
   @PutMapping("/{id}/add/product/{productId}")
   public CartVO addProduct(@PathVariable("id") Long id, @PathVariable("productId") Long productId) {
-    return Converter.parse(service.addProduct(id, productId), CartVO.class);
+    var valueObject = Converter.parse(service.addProduct(id, productId), CartVO.class);
+    valueObject.add(linkTo(methodOn(CartController.class).findById(valueObject.getId())).withSelfRel());
+    return valueObject;
   }
 
   @PutMapping("/{id}/add/coupon/{couponId}")
   public CartVO addCoupon(@PathVariable("id") Long id, @PathVariable("couponId") Long couponId) {
-    return Converter.parse(service.addCoupon(id, couponId), CartVO.class);
+    var valueObject = Converter.parse(service.addCoupon(id, couponId), CartVO.class);
+    valueObject.add(linkTo(methodOn(CartController.class).findById(valueObject.getId())).withSelfRel());
+    return valueObject;
   }
 
 }

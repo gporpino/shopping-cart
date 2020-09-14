@@ -2,6 +2,8 @@ package br.com.gporpino.apishoppingcart.application.controllers;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,26 +29,35 @@ public class CouponController {
 
   @GetMapping
   public List<CouponVO> findAll() {
-    return Converter.parse(service.findAll(), CouponVO.class);
+    var coupons = Converter.parse(service.findAll(), CouponVO.class);
+    coupons.stream().forEach(p -> p.add(linkTo(methodOn(CouponController.class).findById(p.getId())).withSelfRel()));
+
+    return coupons;
   }
 
   @GetMapping("/{id}")
   public CouponVO findById(@PathVariable("id") Long id) {
-    return Converter.parse(service.findById(id), CouponVO.class);
+    var valueObject = Converter.parse(service.findById(id), CouponVO.class);
+    valueObject.add(linkTo(methodOn(CouponController.class).findById(id)).withSelfRel());
+    return valueObject;
   }
 
   @PostMapping
-  public CouponVO create(@RequestBody CouponVO product) {
-    var entity = Converter.parse(product, Coupon.class);
-    var vo = Converter.parse(service.create(entity), CouponVO.class);
-    return vo;
+  public CouponVO create(@RequestBody CouponVO coupon) {
+    var entity = Converter.parse(coupon, Coupon.class);
+    var valueObject = Converter.parse(service.create(entity), CouponVO.class);
+
+    valueObject.add(linkTo(methodOn(CouponController.class).findById(valueObject.getId())).withSelfRel());
+    return valueObject;
+
   }
 
   @PutMapping
-  public CouponVO update(@RequestBody CouponVO product) {
-    var entity = Converter.parse(product, Coupon.class);
-    var vo = Converter.parse(service.update(entity), CouponVO.class);
-    return vo;
+  public CouponVO update(@RequestBody CouponVO coupon) {
+    var entity = Converter.parse(coupon, Coupon.class);
+    var valueObject = Converter.parse(service.update(entity), CouponVO.class);
+    valueObject.add(linkTo(methodOn(CouponController.class).findById(valueObject.getId())).withSelfRel());
+    return valueObject;
   }
 
   @DeleteMapping("/{id}")

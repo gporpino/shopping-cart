@@ -2,7 +2,9 @@ package br.com.gporpino.apishoppingcart.application.vo;
 
 import java.io.Serializable;
 
-public class CouponVO implements Serializable {
+import org.springframework.hateoas.RepresentationModel;
+
+public class CouponVO extends RepresentationModel<CouponVO> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
