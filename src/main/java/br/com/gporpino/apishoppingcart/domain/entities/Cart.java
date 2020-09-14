@@ -83,7 +83,7 @@ public class Cart implements Serializable {
   }
 
   public int getSubtotal() {
-    return items.stream().mapToInt((p) -> p.subtotal()).sum();
+    return items.stream().mapToInt((p) -> p.getSubtotal()).sum();
   }
 
   public int getTotal() {
