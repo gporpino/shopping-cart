@@ -21,7 +21,7 @@ import br.com.gporpino.apishoppingcart.domain.services.interfaces.ICartService;
 public class CartController {
 
   @Autowired
-  ICartService service;
+  private ICartService service;
 
   @GetMapping
   public List<Cart> findAll() {
