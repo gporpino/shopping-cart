@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.gporpino.apishoppingcart.application.converter.Converter;
+import br.com.gporpino.apishoppingcart.application.vo.ProductVO;
 import br.com.gporpino.apishoppingcart.domain.entities.Product;
 import br.com.gporpino.apishoppingcart.domain.services.interfaces.IProductService;
 
@@ -24,23 +26,27 @@ public class ProductController {
   private IProductService service;
 
   @GetMapping
-  public List<Product> findAll() {
-    return service.findAll();
+  public List<ProductVO> findAll() {
+    return Converter.parse(service.findAll(), ProductVO.class);
   }
 
   @GetMapping("/{id}")
-  public Product findById(@PathVariable("id") Long id) {
-    return service.findById(id);
+  public ProductVO findById(@PathVariable("id") Long id) {
+    return Converter.parse(service.findById(id), ProductVO.class);
   }
 
   @PostMapping
-  public Product create(@RequestBody Product product) {
-    return service.create(product);
+  public ProductVO create(@RequestBody ProductVO product) {
+    var entity = Converter.parse(product, Product.class);
+    var vo = Converter.parse(service.create(entity), ProductVO.class);
+    return vo;
   }
 
   @PutMapping
-  public Product update(@RequestBody Product product) {
-    return service.update(product);
+  public ProductVO update(@RequestBody ProductVO product) {
+    var entity = Converter.parse(product, Product.class);
+    var vo = Converter.parse(service.update(entity), ProductVO.class);
+    return vo;
   }
 
   @DeleteMapping("/{id}")
