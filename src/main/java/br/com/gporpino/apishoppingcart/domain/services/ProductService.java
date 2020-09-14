@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import br.com.gporpino.apishoppingcart.application.exceptions.ResourceNotFoundException;
 import br.com.gporpino.apishoppingcart.domain.entities.Product;
+import br.com.gporpino.apishoppingcart.domain.repository.IRepository;
 import br.com.gporpino.apishoppingcart.domain.services.interfaces.IProductService;
-import br.com.gporpino.apishoppingcart.infra.repository.ProductRepository;
 
 @Service
 public class ProductService implements IProductService {
 
   @Autowired
-  ProductRepository repository;
+  IRepository<Product> repository;
 
   public Product findById(long id) {
 

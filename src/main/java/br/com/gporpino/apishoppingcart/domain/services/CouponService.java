@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import br.com.gporpino.apishoppingcart.application.exceptions.ResourceNotFoundException;
 import br.com.gporpino.apishoppingcart.domain.entities.Coupon;
+import br.com.gporpino.apishoppingcart.domain.repository.IRepository;
 import br.com.gporpino.apishoppingcart.domain.services.interfaces.ICouponService;
-import br.com.gporpino.apishoppingcart.infra.repository.CouponRepository;
 
 @Service
 public class CouponService implements ICouponService {
 
   @Autowired
-  CouponRepository repository;
+  IRepository<Coupon> repository;
 
   public Coupon findById(long id) {
 

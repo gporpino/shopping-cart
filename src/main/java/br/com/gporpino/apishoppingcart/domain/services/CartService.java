@@ -7,20 +7,23 @@ import org.springframework.stereotype.Service;
 
 import br.com.gporpino.apishoppingcart.application.exceptions.ResourceNotFoundException;
 import br.com.gporpino.apishoppingcart.domain.entities.Cart;
+import br.com.gporpino.apishoppingcart.domain.repository.IRepository;
 import br.com.gporpino.apishoppingcart.domain.services.interfaces.ICartService;
+import br.com.gporpino.apishoppingcart.domain.services.interfaces.ICouponService;
+import br.com.gporpino.apishoppingcart.domain.services.interfaces.IProductService;
 import br.com.gporpino.apishoppingcart.infra.repository.CartRepository;
 
 @Service
 public class CartService implements ICartService {
 
   @Autowired
-  private CartRepository repository;
+  private IRepository<Cart> repository;
 
   @Autowired
-  private ProductService productService;
+  private IProductService productService;
 
   @Autowired
-  private CouponService couponService;
+  private ICouponService couponService;
 
   public CartService() {
   }
